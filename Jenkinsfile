@@ -12,20 +12,22 @@ pipeline {
         
         stage("Build"){
             steps {
+                echo "Building application ${BUILD_VERSION}"
                 sh 'npm install'
             }
         }
         
         stage('Test'){
             steps {
+                echo 'Testing the application'
                 sh 'npm test'
             }
         }
-        stage ('Node Server'){
-            steps {
-                sh 'node server'
-            }
-        }
+        // stage ('Node Server'){
+        //     steps {
+        //         sh 'node server'
+        //     }
+        // }
         
         stage("Deploy to Heroku"){
             steps {
@@ -39,7 +41,7 @@ pipeline {
     post {
         success {
             // echo "sucess"
-            slackSend color: "red", message: "sessessful"
+            slackSend color: "red", message: "successful"
         }
     }
 }
