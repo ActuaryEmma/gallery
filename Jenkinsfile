@@ -44,7 +44,9 @@ pipeline {
             Heroku link : https://enigmatic-stream-66111.herokuapp.com/ \
             GitHub link : https://github.com/ActuaryEmma/gallery"
 
-            emailext attachLog: true, 
+        
+
+            mail(
                 body:
                     """
                     <p>EXECUTED: Job <b>\'${env.JOB_NAME}:${env.BUILD_NUMBER})\'</b></p>
@@ -56,6 +58,8 @@ pipeline {
                     """,
                 subject: "Status: 'SUCCESS' -Job \'${env.JOB_NAME}:${env.BUILD_NUMBER}\'", 
                 to: 'legendsname2019@gmail.com'
+            )
+                
         }
          failure {
             slackSend color: "danger", message: "Build for ${BUILD_ID} failed"
