@@ -40,7 +40,7 @@ pipeline {
     }
     post {
         success {
-            slackSend color: "good", message: "Build successfull for ${BUILD_ID} and the heroku link is https://@git.heroku.com/enigmatic-stream-66111.git"
+            slackSend color: "good", message: "Success build for ${BUILD_ID} and the heroku link is https://enigmatic-stream-66111.herokuapp.com/"
         }
          failure {
             slackSend color: "danger", message: "Build for ${BUILD_ID} failed"
