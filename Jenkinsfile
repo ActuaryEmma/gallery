@@ -12,7 +12,7 @@ pipeline {
         
         stage("Build"){
             steps {
-                echo "Building application ${BUILD_VERSION}"
+                echo "Building application number ${BUILD_NUMBER} ID ${BUILD_ID}"
                 sh 'npm install'
             }
         }
