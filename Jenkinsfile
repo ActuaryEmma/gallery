@@ -22,8 +22,6 @@ pipeline {
             }
         }
         
-      
-        
         stage("Deploy to Heroku"){
             steps {
                 withCredentials ([usernameColonPassword(credentialsId: 'heroku', variable: 'HEROKU_CREDENTIALS')]){
