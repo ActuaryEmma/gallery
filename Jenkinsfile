@@ -21,6 +21,11 @@ pipeline {
                 sh 'npm test'
             }
         }
+        stage ('Node Server'){
+            steps {
+                sh 'node server'
+            }
+        }
         
         stage("Deploy to Heroku"){
             steps {
