@@ -20,14 +20,9 @@ pipeline {
         stage('Test'){
             steps {
                 echo 'Testing the application'
-                sh 'npm test'
+                sh 'npm tes'
             }
         }
-        // stage ('Node Server'){
-        //     steps {
-        //         sh 'node server'
-        //     }
-        // }
         
         stage("Deploy to Heroku"){
             steps {
@@ -63,6 +58,20 @@ pipeline {
         }
          failure {
             slackSend color: "danger", message: "Build for ${BUILD_ID} failed"
+
+            mail(
+                body:
+                    """
+                    <p>EXECUTED: Job <b>\'${env.JOB_NAME}:${env.BUILD_NUMBER})\'</b></p>
+                    <p>
+                    View console output at 
+                    "<a href="${env.BUILD_URL}">${env.JOB_NAME}:${env.BUILD_NUMBER}</a>"
+                    </p> 
+                      <p><i>(Build log is attached.)</i></p>
+                    """,
+                subject: "Status: 'SUCCESS' -Job \'${env.JOB_NAME}:${env.BUILD_NUMBER}\'", 
+                to: 'legendsname2019@gmail.com'
+            )
         }
     }
 }
