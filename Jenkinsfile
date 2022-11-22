@@ -28,7 +28,7 @@ pipeline {
 
     }
     tools {
-        nodejs 'nodejs'
+        nodejs 'nodej'
     }
     stages {
         stage("Clone repository"){
@@ -66,8 +66,6 @@ pipeline {
             Heroku link : https://enigmatic-stream-66111.herokuapp.com/ \
             GitHub link : https://github.com/ActuaryEmma/gallery"
 
-        
-
             mail(
                 body: EMAIL_BODY, 
 
@@ -78,7 +76,7 @@ pipeline {
                 
         }
         failure {
-            slackSend color: "danger", message: "Build for ${BUILD_ID} failed"
+            slackSend color: "danger", message: "Build for ${env.BUILD_URL} failed"
 
             mail(
                  body: EMAIL_BODY, 
