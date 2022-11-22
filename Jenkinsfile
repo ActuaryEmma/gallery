@@ -47,14 +47,14 @@ pipeline {
         stage('Test'){
             steps {
                 echo 'Testing the application'
-                 'npm test'
+                sh 'npm test'
             }
         }
         
         stage("Deploy to Heroku"){
             steps {
                 withCredentials ([usernameColonPassword(credentialsId: 'heroku', variable: 'HEROKU_CREDENTIALS')]){
-                     sh "git push  https://${HEROKU_CREDENTIALS}@git.heroku.com/enigmatic-stream-66111.git master"
+                     sh "git push  https://${HEROKU_CREDENTIAL}@git.heroku.com/enigmatic-stream-66111.git master"
                 }
             }
         }
