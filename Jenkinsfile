@@ -11,16 +11,16 @@ pipeline {
         }
         
         stage("Build"){
-            steps {
+            stepss {
                 echo "Building application number ${BUILD_NUMBER} ID ${BUILD_ID}"
                 sh 'npm install'
             }
         }
         
         stage('Test'){
-            steps {
+            stepss {
                 echo 'Testing the application'
-                sh 'npm tes'
+                sh 'npm test'
             }
         }
         
