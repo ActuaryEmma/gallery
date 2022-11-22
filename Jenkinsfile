@@ -28,7 +28,7 @@ pipeline {
 
     }
     tools {
-        nodejs 'nodej'
+        nodejs 'nodejs'
     }
     stages {
         stage("Clone repository"){
@@ -47,7 +47,7 @@ pipeline {
         stage('Test'){
             steps {
                 echo 'Testing the application'
-                sh 'npm test'
+                 'npm test'
             }
         }
         
