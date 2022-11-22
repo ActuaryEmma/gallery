@@ -1,5 +1,32 @@
 pipeline {
     agent any
+    environment {
+
+        EMAIL_BODY = 
+
+        """
+
+            <p>EXECUTED: Job <b>\'${env.JOB_NAME}:${env.BUILD_NUMBER})\'</b></p>
+
+            <p>
+
+            View console output at 
+
+            "<a href="${env.BUILD_URL}">${env.JOB_NAME}:${env.BUILD_NUMBER}</a>"
+
+            </p> 
+
+            <p><i>(Build log is attached.)</i></p>
+
+        """
+
+        EMAIL_SUBJECT_SUCCESS = "Status: 'SUCCESS' -Job \'${env.JOB_NAME}:${env.BUILD_NUMBER}\'" 
+
+        EMAIL_SUBJECT_FAILURE = "Status: 'FAILURE' -Job \'${env.JOB_NAME}:${env.BUILD_NUMBER}\'" 
+
+        EMAIL_RECEPIENT = 'legendsname2019@gmail.com'
+
+    }
     tools {
         nodejs 'nodejs'
     }
@@ -11,16 +38,16 @@ pipeline {
         }
         
         stage("Build"){
-            stepss {
+            steps{
                 echo "Building application number ${BUILD_NUMBER} ID ${BUILD_ID}"
                 sh 'npm install'
             }
         }
         
         stage('Test'){
-            stepss {
+            steps {
                 echo 'Testing the application'
-                sh 'npm test'
+                 'npm test'
             }
         }
         
@@ -42,35 +69,23 @@ pipeline {
         
 
             mail(
-                body:
-                    """
-                    <p>EXECUTED: Job <b>\'${env.JOB_NAME}:${env.BUILD_NUMBER})\'</b></p>
-                    <p>
-                    View console output at 
-                    "<a href="${env.BUILD_URL}">${env.JOB_NAME}:${env.BUILD_NUMBER}</a>"
-                    </p> 
-                      <p><i>(Build log is attached.)</i></p>
-                    """,
-                subject: "Status: 'SUCCESS' -Job \'${env.JOB_NAME}:${env.BUILD_NUMBER}\'", 
-                to: 'legendsname2019@gmail.com'
+                body: EMAIL_BODY, 
+
+                subject: EMAIL_SUBJECT_SUCCESS,
+
+                to: EMAIL_RECEPIENT
             )
                 
         }
-         failure {
+        failure {
             slackSend color: "danger", message: "Build for ${BUILD_ID} failed"
 
             mail(
-                body:
-                    """
-                    <p>EXECUTED: Job <b>\'${env.JOB_NAME}:${env.BUILD_NUMBER})\'</b></p>
-                    <p>
-                    View console output at 
-                    "<a href="${env.BUILD_URL}">${env.JOB_NAME}:${env.BUILD_NUMBER}</a>"
-                    </p> 
-                      <p><i>(Build log is attached.)</i></p>
-                    """,
-                subject: "Status: 'SUCCESS' -Job \'${env.JOB_NAME}:${env.BUILD_NUMBER}\'", 
-                to: 'legendsname2019@gmail.com'
+                 body: EMAIL_BODY, 
+
+                subject: EMAIL_SUBJECT_FAILURE, 
+
+                to: EMAIL_RECEPIENT
             )
         }
     }
